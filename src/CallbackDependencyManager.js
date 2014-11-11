@@ -1,14 +1,14 @@
 /**
  * @providesModule CallbackDependencyManager
  */
-function DependencyManager() {
+function CallbackDependencyManager() {
     this.dependencyId = 1;
     this.storedDeps = {};
     this.countMap = {};
     this.persistendDepsSatisfied = {};
 }
 
-DependencyManager.prototype._markDependencyRelationship = function(depId, names) {
+CallbackDependencyManager.prototype._markDependencyRelationship = function(depId, names) {
     var affected = 0,
         involved = {},
         i = names.length;
@@ -24,24 +24,24 @@ DependencyManager.prototype._markDependencyRelationship = function(depId, names)
     return affected;
 };
 
-DependencyManager.prototype.addDependencyToExistingCallback = function(depId, eventNames) {
+CallbackDependencyManager.prototype.addDependencyToExistingCallback = function(depId, eventNames) {
     if (!this.storedDeps[depId]) return;
     var refCount = this._markDependencyRelationship(depId, eventNames);
     this.storedDeps[depId].remaingCount += refCount;
 };
 
-DependencyManager.prototype.registerCallback = function(callback, eventNames) {
+CallbackDependencyManager.prototype.registerCallback = function(callback, eventNames) {
     var token = this.dependencyId++;
     var refCount = this._markDependencyRelationship(token, eventNames);
     if (refCount <= 0) {
         callback();
     } else {
-        this.storedDeps[token] = new DependencyTask(callback, refCount);
+        this.storedDeps[token] = new CallbackDependencyTask(callback, refCount);
     }
     return token;
 };
 
-DependencyManager.prototype._satisfyDependency = function(name) {
+CallbackDependencyManager.prototype._satisfyDependency = function(name) {
     if (!this.countMap[name]) return; // event not registered to track
     for (var depId in this.countMap[name]) {
 
@@ -59,32 +59,29 @@ DependencyManager.prototype._satisfyDependency = function(name) {
     }
 };
 
-DependencyManager.prototype.isPersistentDependencySatisfied = function(name) {
+CallbackDependencyManager.prototype.isPersistentDependencySatisfied = function(name) {
     return !!this.persistendDepsSatisfied[name];
 };
 
-DependencyManager.prototype.satisfyPersistentDependency = function(name) {
+CallbackDependencyManager.prototype.satisfyPersistentDependency = function(name) {
     this.persistendDepsSatisfied[name] = true;
     this._satisfyDependency(name);
 };
 
-DependencyManager.prototype.unsatisfyPersistentDependency = function(name) {
+CallbackDependencyManager.prototype.unsatisfyPersistentDependency = function(name) {
     delete this.persistendDepsSatisfied[name];
 };
 
-DependencyManager.prototype.satisfyNonPersistentDependency = function(name) {
+CallbackDependencyManager.prototype.satisfyNonPersistentDependency = function(name) {
     var isPersistentDependencySatisfied = this.persistendDepsSatisfied[name];
     isPersistentDependencySatisfied || (this.persistendDepsSatisfied[name] = true);
     this._satisfyDependency(name);
     isPersistentDependencySatisfied || (delete this.persistendDepsSatisfied[name]);
 };
 
-function DependencyTask(callback, count) {
+function CallbackDependencyTask(callback, count) {
     this.callback = callback;
     this.remaingCount = count || 0;
 }
 
-var klass = new DependencyManager();
-klass.__superConstructor__ = DependencyManager;
-
-module.exports = klass;
+module.exports = CallbackDependencyManager;

@@ -1,5 +1,5 @@
 /**
- * providesModule Bootloader
+ * @providesModule Bootloader
  */
 var requireLazy = require('./require.js').requireLazy;
 var BootloaderConfig = require('./BootloaderConfig.js');
