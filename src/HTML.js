@@ -85,7 +85,7 @@ HTML.prototype._fillCache = function() {
     var markupBothInClosingTags = this._markup.replace(reSingleTag, function(r, s, t) {
             return hasSingleTag[t.toLowerCase()] ? r : s + '></' + t + '>';
         });
-    var scriptBlocks = null,
+    var scriptBlocks = null;
     var nodesCreated = createNodesFromMarkup(markupBothInClosingTags, function handleScript(scriptNode) {
             scriptBlocks = scriptBlocks || [];
             scriptBlocks.push(

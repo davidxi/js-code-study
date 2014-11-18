@@ -1,5 +1,5 @@
 /**
- * @providesModule eprintf
+ * @providesModule Env
  */
 var copyProperties = require('./copyProperties.js');
 
