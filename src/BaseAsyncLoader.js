@@ -1,8 +1,8 @@
 /**
  * @providesModule BaseAsyncLoader
  */
-var g = require('./KeyedCallbackManager.js');
-var h = require('./copyProperties.js');
+var KeyedCallbackManager = require('KeyedCallbackManager');
+var copyProperties = require('copyProperties');
 
 var cache = {};
 
