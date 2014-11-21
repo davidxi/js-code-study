@@ -11,7 +11,7 @@ function memoize(fn) {
         }
         invariant(!args.length);
         if (memoize) {
-            result = fn(); // why not pass args when call fn() ??
+            result = fn(); // @todo: why not pass args when call fn() ??
             fn = null;
         }
         return result;
