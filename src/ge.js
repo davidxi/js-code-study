@@ -8,20 +8,25 @@ function ge(id /*needle*/, node /*to start*/, tagName /*filter*/) {
 }
 
 function getNodeById(id /*needle*/ , node /*to start*/ , tagName /*filter*/ ) {
-    var found, n, o;
+    var found, candidateElements, o;
     if (getNodeId(node) == id) {
         return node;
     } else if (node.getElementsByTagName) {
-        n = node.getElementsByTagName(tagName || '*');
-        for (o = 0; o < n.length; o++)
-            if (getNodeId(n[o]) == id)
-                return n[o];
+        candidateElements = node.getElementsByTagName(tagName || '*');
+        for (o = 0; o < candidateElements.length; o++) {
+            if (getNodeId(candidateElements[o]) == id) {
+                return candidateElements[o];
+            }
+        }
     } else {
-        n = node.childNodes;
-        for (o = 0; o < n.length; o++) {
-            found = getNodeById(id, n[o]);
-            if (found)
+        // 'filterByTagName' mode when Element.getElementsByTagName() is not supported,
+        // try every child node.
+        candidateElements = node.childNodes;
+        for (o = 0; o < candidateElements.length; o++) {
+            found = getNodeById(id, candidateElements[o]);
+            if (found) {
                 return found;
+            }
         }
     }
     return null;

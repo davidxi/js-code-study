@@ -46,8 +46,8 @@ function detectUserAgent() {
         _opera = matchedIE[3] ? parseFloat(matchedIE[3]) : NaN;
         _webkit = matchedIE[4] ? parseFloat(matchedIE[4]) : NaN;
         if (_webkit) {
-            z = /(?:Chrome\/(\d+\.\d+))/.exec(userAgent);
-            _chrome = z && matchedIE[1] ? parseFloat(matchedIE[1]) : NaN;
+            var matched = /(?:Chrome\/(\d+\.\d+))/.exec(userAgent);
+            _chrome = matched && matched[1] ? parseFloat(matched[1]) : NaN;
         } else {
             _chrome = NaN;
         }
