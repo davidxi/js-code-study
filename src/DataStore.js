@@ -9,8 +9,9 @@ var cache = {},
 function generateKey(m) {
     if (typeof m == 'string') {
         return 'str_' + m;
-    } else
+    } else {
         return 'elem_' + (m.__FB_TOKEN || (m.__FB_TOKEN = [id++]))[0];
+    }
 }
 
 function getStorage(namespace) {

@@ -208,7 +208,7 @@ var DOMQuery = {
         var detectTypes_ = createArrayFromMixed(detectTypes).join('|').toUpperCase().split('|');
         var needle = createObjectFrom(detectTypes_);
         return isNode(element) &&
-            element.nodeName in needle;
+                element.nodeName in needle;
         // Node.nodeName read-only property returns the name of the current node
         // for Element type, Node.nodeName = Element.tagName
     },
@@ -220,7 +220,7 @@ var DOMQuery = {
     },
     isInputNode: function(element) {
         return DOMQuery.isNodeOfType(element, ['input', 'textarea']) ||
-            element.contentEditable === 'true';
+                element.contentEditable === 'true';
         // HTMLElement.contentEditable
         // Chrome  Firefox (Gecko) Internet Explorer   Opera   Safari
         // 11      3.0 (1.9)       6                   10.6    3.2
