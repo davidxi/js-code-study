@@ -23,7 +23,7 @@ function enforceMaxLength(inputElem, maxLength) {
             length = selectionEnd;
         }
         var maxEnd = length - trailingLen;
-        if (maxEnd && (value.charCodeAt(maxEnd - 1) & 64512) === 55296) { // @todo: purpose ?
+        if (maxEnd && (value.charCodeAt(maxEnd - 1) & 64512) === 55296) { // @todo: what purpose ?
             maxEnd--;
         }
         selectionEnd = Math.min(selectionEnd, maxEnd);
@@ -32,7 +32,7 @@ function enforceMaxLength(inputElem, maxLength) {
             InputSelection.set(inputElem, Math.min(range.start, selectionEnd), selectionEnd);
         }
     }
-};
+}
 
 var inputListener = function(event) {
     var target = event.getTarget();

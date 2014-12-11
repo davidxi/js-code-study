@@ -2,11 +2,12 @@
   "browser": true,
   "esnext": true,
 
-  "bitwise": true,
+  "bitwise": false,
   "boss": true,
   "devel": true,
   "eqnull": true,
   "expr": true,
+  "evil": true,
   "funcscope": true,
   "globalstrict": false,
   "loopfunc": true,
@@ -15,6 +16,7 @@
   "nonstandard": true,
   "onecase": true,
   "regexdash": true,
+  "scripturl": true,
   "sub": false,
   "trailing": true,
   "undef": true,
@@ -22,6 +24,9 @@
 
   "globals": {
     "__DEV__": false,
+    "Event": true,
+    "history": true,
+
     "global": true,
     "exports": false,
     "module": false,

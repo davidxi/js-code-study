@@ -24,7 +24,7 @@
              }
          }
      } else { // typeof (obj) == 'string'
-         params.push(encodeComponent(p) + '=' + encodeComponent(obj));
+         params.push(encodeComponent(prefix) + '=' + encodeComponent(obj));
      }
      return params.join('&');
  }
@@ -54,7 +54,7 @@
                  decodeComponent(kvPair[1]);
          } else {
              var namespace = nestedKvPair[2].split(/\]\[|\[|\]/).slice(0, -1);
-             var rootKey = nestedKvPair[1]
+             var rootKey = nestedKvPair[1];
              var value = decodeComponent(nestedKvPair[3] || '');
              namespace[0] = rootKey;
              var currentRoot = result;
@@ -62,7 +62,7 @@
              // fill in any holes for each namespace level
              for (var z = 0; z < namespace.length - 1; z++) {
                  if (namespace[z]) {
-                     if (!owns.call(currentRoot, v[z])) {
+                     if (!owns.call(currentRoot, namespace[z])) {
                          var aa = namespace[z + 1] && !namespace[z + 1].match(/^\d{1,3}$/) ? {} : [];
                          currentRoot[namespace[z]] = aa;
                          if (currentRoot[namespace[z]] !== aa) { // @why need evaluate this right after set opreation above ?

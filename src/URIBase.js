@@ -103,7 +103,7 @@ URIBase.prototype.isSecure = function() {
     return this.getProtocol() === 'https';
 };
 URIBase.prototype.setDomain = function(q) {
-    if (l.test(q)) {
+    if (regexFailHost.test(q)) {
         throw new Error(ex('URI.setDomain: unsafe domain specified: %s for url %s', q, this.toString()));
     }
     this._domain = q;

@@ -8,13 +8,13 @@ function evalGlobal(code) {
     if (!code) return;
     var scriptNode = document.createElement('script');
     try {
-        scripeNode.appendChild(document.createTextNode(code));
+        scriptNode.appendChild(document.createTextNode(code));
     } catch (j) {
-        scripeNode.text = code;
+        scriptNode.text = code;
     }
     var mountNode = document.getElementsByTagName('head')[0] || document.documentElement;
-    mountNode.appendChild(scripeNode);
-    mountNode.removeChild(scripeNode);
+    mountNode.appendChild(scriptNode);
+    mountNode.removeChild(scriptNode);
 }
 
 module.exports = evalGlobal;

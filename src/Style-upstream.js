@@ -48,6 +48,7 @@ function validatePropValue(u, prop, value) {
         case 'height':
             var isNegativeNum = parseInt(value, 10) < 0;
             invariant(!isNegativeNum);
+            /* falls through */
         default:
             invariant(isNaN(value) || !value || value === '0');
             break;

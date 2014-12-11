@@ -86,8 +86,6 @@ function onDOMReadyEventDispatcher() {
 global._domcontentready = onDOMReadyEventDispatcher;
 
 function setupOnLoadAndOnDOMReadyDispatchers() {
-    var ca = document,
-        da = window;
     if (document.addEventListener) {
         var ea = /AppleWebKit.(\d+)/.exec(navigator.userAgent);
         if (ea && ea[1] < 525) {
@@ -108,7 +106,7 @@ function setupOnLoadAndOnDOMReadyDispatchers() {
         /**
          * add onDOMReadyEventDispatcher() to a dummy js node onreadystate
          */
-        document.write('<script onreadystatechange="if (this.readyState==\'complete\') {' + 'this.parentNode.removeChild(this);_domcontentready();}" ' + 'defer="defer" src="' + ga + '"><\/script\>');
+        document.write('<script onreadystatechange="if (this.readyState==\'complete\') {' + 'this.parentNode.removeChild(this);_domcontentready();}" ' + 'defer="defer" src="' + ga + '"><\/script\>'); // jshint ignore:line
     }
     var origOnload = window.onload;
     window.onload = function() {

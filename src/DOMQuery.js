@@ -196,7 +196,7 @@ var DOMQuery = {
     },
     getRootElement: function() {
         var rootElement = null;
-        if (window.Quickling && Quickling.isActive()) {
+        if (window.Quickling && window.Quickling.isActive()) {
             rootElement = ge('content');
         }
         return rootElement || document.body;

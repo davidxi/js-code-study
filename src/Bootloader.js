@@ -192,7 +192,7 @@ var Bootloader = {
         for (var pa = 0; pa < componentIds.length; pa++) {
             var resourceObject = componentMap[componentIds[pa]],
                 legacyComponentId = 'legacy:' + componentIds[pa];
-            if (csomponentMap[legacyComponentId]) {
+            if (componentMap[legacyComponentId]) {
                 if (resourceObject)
                     reportError(ex('%s has a conflicting legacy component. That cannot happen ' + 'and legacy won btw.', componentIds[pa]));
                 componentIds[pa] = legacyComponentId;
@@ -239,9 +239,11 @@ var Bootloader = {
             var resourcesToLoad = {};
             for (qa = 0; qa < resourceObjects.length; ++qa)
                 resourcesToLoad[resourceObjects[qa].name] = true;
-            for (var sa in requested)
-                if (!(sa in permanentResources) && !(sa in resourcesToLoad) && !(sa in x))
+            for (var sa in requested) {
+                if (!(sa in permanentResources) && !(sa in resourcesToLoad) && !(sa in earlyLoadResources)) {
                     unloadResource(sa);
+                }
+            }
             earlyLoadResources = {};
         }
 
@@ -299,7 +301,7 @@ var Bootloader = {
         if (window.CavalryLogger)
             window.CavalryLogger.done_js(resourceIds);
         for (var oa = 0; oa < resourceIds.length; ++oa) {
-            var resourceId = ma[oa];
+            var resourceId = resourceIds[oa];
             if (resourceId) {
                 markRequest(resourceId);
                 callbackManager.satisfyPersistentDependency(resourceId);
@@ -375,10 +377,10 @@ var Bootloader = {
         return Object.keys(retiredUrls);
     },
     __debug: {
-        callbackManager: aa,
-        componentMap: p,
-        requested: n,
-        resources: s
+        callbackManager: callbackManager,
+        componentMap: componentMap,
+        requested: requested,
+        resources: resources
     }
 };
 

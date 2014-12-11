@@ -12,7 +12,7 @@ function getLoader(endpoint, type, sendFn) {
     var hasUnavaiable = false;
     var unavaiableCallback = []; // due to unavaiable resources
     function nextCycle() {
-        if (!unavaiableCallback.length || hasUnavaiableCallback) {
+        if (!unavaiableCallback.length || hasUnavaiable) {
             return;
         }
         hasUnavaiable = true;

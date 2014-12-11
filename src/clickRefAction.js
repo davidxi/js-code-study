@@ -23,7 +23,7 @@ function clickRefAction(contextName, eventTarget, event, mode, memo) {
         for (var s = trackObjectsCached.length - 1; s >= 0 && ((timestamp - trackObjectsCached[s]._ue_ts) < 50); --s) {
 
             if (trackObjectsCached[s]._node == eventTarget && trackObjectsCached[s]._type == evtType) {
-                return j[s];
+                return trackObjectsCached[s];
             }
         }
     }

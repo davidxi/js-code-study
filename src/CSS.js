@@ -25,7 +25,7 @@ var CSS = {
         return CSSCore.conditionClass($(nodeId), className, bool);
     },
     toggleClass: function(nodeId, className) {
-        return CSS.conditionClass(nodeId, className, !j.hasClass(nodeId, className));
+        return CSS.conditionClass(nodeId, className, !CSS.hasClass(nodeId, className));
     },
     shown: function(nodeId) {
         return !CSS.hasClass(nodeId, hiddenClassName);

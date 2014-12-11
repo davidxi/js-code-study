@@ -9,7 +9,7 @@ function createObjectFrom(array, def) {
         def = true;
     }
     for (var l = array.length; l--;) {
-        obj[array[l]] = k ? def[l] : def;
+        obj[array[l]] = isArray ? def[l] : def;
     }
     return obj;
 }

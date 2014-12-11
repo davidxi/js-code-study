@@ -1,7 +1,7 @@
 /**
  * @providesModule mapObject
  */
-var hasOwnProperty = Object.prototype.hasOwnProperty;
+var _hasOwnProperty = Object.prototype.hasOwnProperty;
 
 /**
  * Executes the provided `callback` once for each enumerable own property in the
@@ -31,7 +31,7 @@ function mapObject(object, callback, context) {
     }
     var result = {};
     for (var name in object) {
-        if (hasOwnProperty.call(object, name)) {
+        if (_hasOwnProperty.call(object, name)) {
             result[name] = callback.call(context, object[name], name, object);
         }
     }

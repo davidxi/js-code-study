@@ -18,7 +18,7 @@ function encode(kvpairs) {
 
 function decode(queryStr, isDisallowDuplicate) {
     var kvpairs = {};
-    if (url === '')
+    if (queryStr === '')
         return kvpairs;
     var params = queryStr.split('&');
     for (var o = 0; o < params.length; o++) {

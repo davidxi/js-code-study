@@ -47,7 +47,7 @@ BitMap.prototype.toCompressedString = function() {
 
 function genUniqStr(num) { // @todo: not sure this is for generating unique str purpose ?
     var m = num.toString(2);
-    n = repeatString('0', m.length - 1);
+    var n = repeatString('0', m.length - 1);
     return n + m;
 }
 

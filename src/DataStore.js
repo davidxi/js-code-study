@@ -42,7 +42,7 @@ var DataStore = {
                 val = (null === r) ? undefined : r;
             }
         if ((defaultValue !== undefined) && (val === undefined)) {
-            val = storage[n] = defaultValue;
+            val = storage[key] = defaultValue;
         }
         return val;
     },

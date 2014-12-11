@@ -28,8 +28,8 @@ function hasArrayNature(obj) { // @todo: duplicate code as in 'toArray'
 }
 
 function createArrayFromMixed(obj) {
-    if (!hasArrayNature(j)) {
-        return [j];
+    if (!hasArrayNature(obj)) {
+        return [obj];
     } else if (Array.isArray(obj)) {
         return obj.slice();
     } else {

@@ -123,9 +123,9 @@ BigPipe.prototype._displayPagelet = function(pageletData) {
                         contentPageletNode.removeChild(contentPageletNode.firstChild);
                     }
                 }
-                setMarkupOnNode(contentPageletNode, childPagelet);
+                setMarkupOnNode(contentPageletNode, contentPagelet);
             } else {
-                contentPageletNode.innerHTML = childPagelet;
+                contentPageletNode.innerHTML = contentPagelet;
             }
         }
 
@@ -287,7 +287,8 @@ copyProperties(BigPipe.prototype, {
         }.bind(this));
 
         if (pageletData.jscc_map) {
-            var initFn = (eval)(pageletData.jscc_map);
+            var initFn;
+            initFn = (eval)(pageletData.jscc_map);
             var resetFn = JSCC.init(initFn);
             rootPagelet.addDestructor(resetFn);
         }

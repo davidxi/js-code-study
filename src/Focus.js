@@ -5,7 +5,6 @@ var CSS = require('CSS');
 var DOM = require('DOM');
 var Event = require('Event');
 var Run = require('Run');
-var cx = require('cx');
 var ge = require('ge');
 
 var eventHandlers = {},

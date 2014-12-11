@@ -8,8 +8,8 @@ for (var h in EventEmitter) {
 }
 
 var protoEmitter = EventEmitter === null ? null : EventEmitter.prototype;
-EventEmitterWithValidation.prototype = Object.create(i);
-EventEmitterWithValidation.prototype.constructor = j;
+EventEmitterWithValidation.prototype = Object.create(protoEmitter);
+EventEmitterWithValidation.prototype.constructor = EventEmitterWithValidation;
 EventEmitterWithValidation.__superConstructor__ = EventEmitter;
 
 function EventEmitterWithValidation(m) {

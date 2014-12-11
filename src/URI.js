@@ -11,13 +11,13 @@ var goURI = require('goURI');
 
 // inherit from URIBase
 for (var n in URIBase) {
-    if (h.hasOwnProperty(n)) {
+    if (URIBase.hasOwnProperty(n)) {
         URI[n] = URIBase[n];
     }
 }
 var protoURIBase = URIBase === null ? null : URIBase.prototype;
 URI.prototype = Object.create(protoURIBase);
-URI.prototype.constructor = p;
+URI.prototype.constructor = URI;
 URI.__superConstructor__ = URIBase;
 
 // ----------------------------------

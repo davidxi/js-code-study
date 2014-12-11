@@ -97,9 +97,11 @@ HTML.prototype._fillCache = function() {
         });
     if (scriptBlocks) {
         this._inlineJS = function() {
-            for (var r = 0; r < scriptBlocks.length; r++) scriptBlocks[r]();
-        }
-    };
+            for (var r = 0; r < scriptBlocks.length; r++) {
+                scriptBlocks[r]();
+            }
+        };
+    }
     this._nodes = nodesCreated;
 };
 HTML.prototype.setAction = function(actionJS) {    

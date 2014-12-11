@@ -133,7 +133,7 @@ Deferred.prototype.then = function(cbSucceeded, cbFailed, cbCanceled, cbContext)
     if (typeof args[0] === 'function') {
         cbCanceled = args.shift();
     }
-    var cbContext = args.shift();
+    cbContext = args.shift();
 
     if (cbSucceeded) {
         var da = [this._invokeCallbackOnGivenDeferred, this, deferred, 'succeed', cbSucceeded, cbContext].concat(args);
@@ -224,6 +224,6 @@ function slice(array, begin) {
     return array ? Array.prototype.slice.call(array, begin) : [];
 }
 
-function sliceStrict(array, v) {
+function sliceStrict(array, begin) {
     return begin < array.length ? slice(array, begin) : [];
 }

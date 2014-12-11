@@ -10,7 +10,7 @@ function CallbackManagerController(callbackArgHandler) {
     // if callbackArgHandler(...) returns false,
     // callback would not be invoked.
     this._callbackArgHandler = callbackArgHandler;
-};
+}
 
 copyProperties(CallbackManagerController.prototype, {
     executeOrEnqueue: function(requests/*Array*/, fn, opts) /*callbackId(int)*/ {

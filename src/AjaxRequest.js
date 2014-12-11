@@ -14,7 +14,7 @@ var copyProperties = require('copyProperties');
 function AjaxRequest(httpMethod, uri, params) {
     this.xhr = getSameOriginTransport();
     if (!(uri instanceof URI)) {
-        uri = new URI(t);
+        uri = new URI(uri);
     }
     if (params && httpMethod == 'GET') {
         uri.setQueryData(params);

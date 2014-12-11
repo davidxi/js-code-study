@@ -2,7 +2,6 @@
  * @providesModule Input
  */
 var CSS = require('CSS');
-var DOMQuery = require('DOMQuery');
 var DOMControl = require('DOMControl');
 var getActiveElement = require('getActiveElement');
 

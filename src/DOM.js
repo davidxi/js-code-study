@@ -66,7 +66,7 @@ var DOM = {
     },
     insertBefore: function(elemOffset, elemContent) {
         var elemContainer = elemOffset.parentNode;
-        return onUpdate(v, elemContainer, function(fragment) {
+        return onUpdate(elemContent, elemContainer, function(fragment) {
             elemContainer.insertBefore(fragment, elemContent);
         });
     },
@@ -107,7 +107,7 @@ function removeNode(elem) {
     }
 }
 
-function onUpdate(elemContent, elemContainer, onUpdate) {
+function onUpdate(elemContent, elemContainer, callbackOnUpdate) {
     elemContent = HTML.replaceJSONWrapper(elemContent);
 
     if (elemContent instanceof HTML &&
@@ -163,7 +163,7 @@ function onUpdate(elemContent, elemContainer, onUpdate) {
         }
     }
 
-    onUpdate(fragment);
+    callbackOnUpdate(fragment);
 
     inlineActions.forEach(function(inlineAction) {
         inlineAction();

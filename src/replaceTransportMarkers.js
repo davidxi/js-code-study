@@ -11,11 +11,11 @@ function replaceTransportMarkers(relDefaultValue, markers, key) {
         }
     } else if (marker && typeof marker == 'object') {
         if (markers.__m) {
-            markers[k] = global.require.call(null, markers.__m);
+            markers[key] = global.require.call(null, markers.__m);
         } else if (markers.__e) {
-            markers[k] = ge(markers.__e);
+            markers[key] = ge(markers.__e);
         } else if (markers.__rel) {
-            markers[k] = relDefaultValue;
+            markers[key] = relDefaultValue;
         } else {
             for (var n in markers) {
                 replaceTransportMarkers(relDefaultValue, markers, n);
