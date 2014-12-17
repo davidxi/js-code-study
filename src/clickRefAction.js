@@ -15,7 +15,7 @@ function clickRefAction(contextName, eventTarget, event, mode, memo) {
     var evtType = event && event.type;
     memo = memo || {};
     if (!eventTarget && event) {
-        eventTarget = event.getTarget(); // @todo: where is event.getTarget() shimed?
+        eventTarget = event.getTarget();
     }
 
     // if same event happend in same element node within 50 ms
