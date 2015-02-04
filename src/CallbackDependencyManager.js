@@ -1,6 +1,8 @@
 /**
  * @providesModule CallbackDependencyManager
  */
+var ErrorUtils = require('./ErrorUtils');
+
 function CallbackDependencyManager() {
     this.dependencyId = 1;
     this.storedDeps = {};
@@ -34,10 +36,10 @@ CallbackDependencyManager.prototype.registerCallback = function(callback, eventN
     var token = this.dependencyId++;
     var refCount = this._markDependencyRelationship(token, eventNames);
     if (refCount <= 0) {
-        callback();
-    } else {
-        this.storedDeps[token] = new CallbackDependencyTask(callback, refCount);
+        ErrorUtils.applyWithGuard(callback);
+        return null;
     }
+    this.storedDeps[token] = new CallbackDependencyTask(callback, refCount);
     return token;
 };
 
@@ -54,7 +56,7 @@ CallbackDependencyManager.prototype._satisfyDependency = function(name) {
         if (this.storedDeps[depId].remaingCount <= 0) {
             var callback = this.storedDeps[depId].callback;
             delete this.storedDeps[depId]; // avoid multiple invoke callback
-            callback();
+            ErrorUtils.applyWithGuard(callback);
         }
     }
 };

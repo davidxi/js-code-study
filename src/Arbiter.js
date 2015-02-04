@@ -30,7 +30,7 @@ Arbiter.prototype.subscribe = function(eventTypes, listener, behavior) {
 
     invariant(typeof listener === 'function');
 
-    behavior = behavior || Arbiter.SUBSCRIBE_ALL;    
+    behavior = behavior || Arbiter.SUBSCRIBE_ALL;
     invariant(behavior === Arbiter.SUBSCRIBE_NEW || behavior === Arbiter.SUBSCRIBE_ALL);
 
     // [EventEmitter::ListenerSubscription]
@@ -43,7 +43,7 @@ Arbiter.prototype.subscribe = function(eventTypes, listener, behavior) {
         var listenerSubscription = this._eventEmitterWithHolding.addRetroactiveListener(eventType, listenerBound);
         this._mapEventPrevented.pop();
         return listenerSubscription;
-         
+
     }, this);
     return new ArbiterToken(this, listenerSubscriptions);
 };
@@ -164,7 +164,7 @@ ArbiterEventHolder.prototype.releaseEvent = function(eventType) {
 };
 
 // ----------------------------------
-//  ArbiterToken  
+//  ArbiterToken
 //    returned by Arbiter.prototype.subscribe()
 // ----------------------------------
 

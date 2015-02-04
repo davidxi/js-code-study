@@ -1,32 +1,22 @@
 /**
  * @providesModule EventEmitter
  */
-var emptyFunction = require('./emptyFunction.js');
-var invariant = require('./invariant.js');
+var EmitterSubscription = require('./EmitterSubscription');
+var ErrorUtils = require('./ErrorUtils');
+var EventSubscriptionVendor = require('./EventSubscriptionVendor');
+var emptyFunction = require('./emptyFunction');
+var invariant = require('./invariant');
+var StopwatchPool = require('./StopwatchPool');
+var LogBuffer = require('./LogBuffer');
 
 function EventEmitter() {
-    this._listenersByType = {};
-    this._listenerContextsByType = {};
-    this._currentSubscription = {};
+    this._eventSubscription = new EventSubscriptionVendor();
+    this._currentSubscription = null;
 }
-
 EventEmitter.prototype.addListener = function(eventType, listener, context) {
-    if (!this._listenersByType[eventType]) {
-        this._listenersByType[eventType] = [];
-    }
-    var key = this._listenersByType[eventType].length;
-    this._listenersByType[eventType].push(listener);
-
-    if (context !== undefined) {
-        if (!this._listenerContextsByType[eventType]) {
-            this._listenerContextsByType[eventType] = [];
-        }
-        this._listenerContextsByType[eventType][key] = context;
-    }
-
-    return new ListenerSubscription(this, eventType, key);
+    var subscription = new EmitterSubscription(this._eventSubscription, listener, context);
+    return this._eventSubscription.addSubscription(eventType, subscription);
 };
-
 EventEmitter.prototype.once = function(eventType, listener, context) {
     var emitter = this;
     return this.addListener(eventType, function() {
@@ -34,91 +24,58 @@ EventEmitter.prototype.once = function(eventType, listener, context) {
         listener.apply(context, arguments);
     });
 };
-
 EventEmitter.prototype.removeAllListeners = function(eventType) {
-    if (eventType === undefined) {
-        this._listenersByType = {};
-        this._listenerContextsByType = {};
-    } else {
-        delete this._listenersByType[eventType];
-        delete this._listenerContextsByType[eventType];
-    }
+    // 'eventType' can be undefined, in which case, to remove all subscrptions
+    this._eventSubscription.removeAllSubscriptions(eventType);
 };
-
 EventEmitter.prototype.removeCurrentListener = function() {
-    invariant(
-        this._currentSubscription.key !== undefined,
-        'Not in an emitting cycle; there is no current listener'
-    );
-    this.removeSubscription(this._currentSubscription);
+    invariant(!!this._currentSubscription);
+    this._eventSubscription.removeSubscription(this._currentSubscription);
 };
-
-EventEmitter.prototype.removeSubscription = function(subscription) {
-    var eventType = subscription.eventType;
-    var key = subscription.key;
-
-    var listenersOfType = this._listenersByType[eventType];
-    if (listenersOfType) {
-        delete listenersOfType[key];
-    }
-
-    var listenerContextsOfType = this._listenerContextsByType[eventType];
-    if (listenerContextsOfType) {
-        delete listenerContextsOfType[key];
-    }
-};
-
 EventEmitter.prototype.listeners = function(eventType) {
-    var listenersOfType = this._listenersByType[eventType];
-    return listenersOfType ? listenersOfType.filter(emptyFunction.thatReturnsTrue) : [];
+    var subscriptionsOfType = this._eventSubscription.getSubscriptionsForType(eventType);
+    if (subscriptionsOfType) {
+        // @todo: purpose of .filter(emptyFunction.thatReturnsTrue) ?
+        return subscriptionsOfType.filter(emptyFunction.thatReturnsTrue).map(function(subscription) {
+            return subscription.listener;
+        });
+    } else {
+        return [];
+    }
 };
-
-EventEmitter.prototype.emit = function(eventType, a, b, c, d, e, _) {
-    invariant(
-        _ === undefined,
-        'EventEmitter.emit currently accepts only up ' +
-          'to five listener arguments.'
-    );
-
-    var listeners = this._listenersByType[eventType];
-    if (listeners) {
-        var contexts = this._listenerContextsByType[eventType];
-        this._currentSubscription.eventType = eventType;
-
-        var keys = Object.keys(listeners);
-        for (var ii = 0; ii < keys.length; ii++) {
-            var key = keys[ii];
-            var listener = listeners[key];
-
-            // The listener may have been removed during this event loop.
-            if (listener) {
-                var context = contexts ? contexts[key] : undefined;
-                this._currentSubscription.key = key;
-                if (context === undefined) {
-                    listener(a, b, c, d, e);
-                } else {
-                    listener.call(context, a, b, c, d, e);
-                }
+EventEmitter.prototype.emit = function(eventType) {
+    var subscriptionsOfType = this._eventSubscription.getSubscriptionsForType(eventType);
+    if (subscriptionsOfType) {
+        var q = Object.keys(subscriptionsOfType);
+        var stopWatch = StopwatchPool.acquire();
+        for (var s = 0; s < q.length; s++) {
+            // @todo:
+            // since subscriptionsOfType is an array, what's the purpose of doing
+            //   Object.keys(foo) + foo[Object.keys(foo)[i]] ?
+            var t = q[s];
+            var subscription = subscriptionsOfType[t];
+            if (subscription) {
+                this._currentSubscription = subscription;
+                var listernerMeta = subscription.listener.__SMmeta || {
+                    name: subscription.listener.name || '<anonymous function>'
+                };
+                stopWatch.reset();
+                ErrorUtils.applyWithGuard(
+                    subscription.listener, // fn
+                    subscription.context, // context
+                    Array.prototype.slice.call(arguments, 1), // fn args
+                    null,
+                    'EventEmitter:' + eventType // guart tag
+                );
+                var timeElapsed = stopWatch.read();
+                LogBuffer.write('event_handler_performance', {
+                    functionMeta: listernerMeta,
+                    time: timeElapsed,
+                    context: eventType
+                });
             }
         }
-
-        this._currentSubscription.eventType = undefined;
-        this._currentSubscription.key = undefined;
+        this._currentSubscription = null;
     }
 };
-
-// ----------------------------------
-//  ListenerSubscription
-// ----------------------------------
-
-function ListenerSubscription(emitter, eventType, key) {
-    this._emitter = emitter;
-    this.eventType = eventType;
-    this.key = key;
-}
-
-ListenerSubscription.prototype.remove = function() {
-    this._emitter.removeSubscription(this);
-};
-
 module.exports = EventEmitter;
