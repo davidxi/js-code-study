@@ -19,7 +19,7 @@ gulp.task('browserify', [], function() {
 });
 
 gulp.task('lint', [], function() {
-    return gulp.src('src/**/*.js')
+    return gulp.src(['src/**/*.js', 'react/**/*.js'])
         .pipe(jshint())
         .pipe(jshint.reporter('jshint-stylish'));
 });

@@ -1,6 +1,7 @@
 /**
  * @providesModule TooltipMixin
  */
+/*jshint eqnull:true */
 var React = require('./React');
 var Tooltip = require('./Tooltip');
 var DOM = require('./DOM');

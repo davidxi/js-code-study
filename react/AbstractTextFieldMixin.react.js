@@ -1,6 +1,7 @@
 /**
  * @providesModule AbstractTextFieldMixin.react
  */
+/*jshint eqnull:true */
 var React = require('./React');
 var Keys = require('./Keys');
 var invariant = require('./invariant');
