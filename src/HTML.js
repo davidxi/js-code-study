@@ -23,13 +23,12 @@ var reSingleTag = /(<(\w+)[^>]*?)\/>/g,
     };
 
 function HTML(o) {
-    "use strict";
     if (o && typeof o.__html === 'string') o = o.__html;
     if (!(this instanceof HTML)) {
         if (o instanceof HTML) return o;
         return new HTML(o);
     }
-    if (o) {        
+    if (o) {
         invariant(typeof o === 'string');
     }
     this._markup = o || '';
@@ -40,21 +39,21 @@ function HTML(o) {
     this._rootNode = null;
 }
 
-HTML.prototype.toString = function() {    
+HTML.prototype.toString = function() {
     var o = this._markup;
     if (this._extraAction) {
         o += '<script type="text/javascript">' + this._extraAction + '</scr' + 'ipt>';
     }
     return o;
 };
-HTML.prototype.getContent = function() {    
+HTML.prototype.getContent = function() {
     return this._markup;
 };
-HTML.prototype.getNodes = function() {    
+HTML.prototype.getNodes = function() {
     this._fillCache();
     return this._nodes;
 };
-HTML.prototype.getRootNode = function() {    
+HTML.prototype.getRootNode = function() {
     invariant(!this._rootNode);
     var o = this.getNodes();
     if (o.length === 1) {
@@ -66,17 +65,17 @@ HTML.prototype.getRootNode = function() {
     }
     return this._rootNode;
 };
-HTML.prototype.getAction = function() {    
+HTML.prototype.getAction = function() {
     this._fillCache();
     var actionMethod = function() {
         this._inlineJS();
         evalGlobal(this._extraAction);
-    }.bind(this);    
+    }.bind(this);
     return this._defer ?
             function() { setTimeout(actionMethod, 0); } :
             actionMethod;
 };
-HTML.prototype._fillCache = function() {    
+HTML.prototype._fillCache = function() {
     if (this._nodes !== null) return;
     if (!this._markup) {
         this._nodes = [];
@@ -104,15 +103,15 @@ HTML.prototype._fillCache = function() {
     }
     this._nodes = nodesCreated;
 };
-HTML.prototype.setAction = function(actionJS) {    
+HTML.prototype.setAction = function(actionJS) {
     this._extraAction = actionJS;
     return this;
 };
-HTML.prototype.setDeferred = function(bool) {    
+HTML.prototype.setDeferred = function(bool) {
     this._defer = !!bool;
     return this;
 };
-HTML.isHTML = function(o) {    
+HTML.isHTML = function(o) {
     return !!o && (o instanceof HTML || o.__html !== undefined);
 };
 HTML.replaceJSONWrapper = function(plainHTML) {
