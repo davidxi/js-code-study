@@ -8,7 +8,7 @@ var joinClasses = require('./joinClasses');
 
 require('./Scrollable');
 
-var ScrollableArea = React.createClass({
+var $ScrollableArea = React.createClass({
     displayName: "ReactScrollableArea",
     propTypes: {
         width: React.PropTypes.number,
@@ -65,4 +65,4 @@ var ScrollableArea = React.createClass({
         Style.set(scrollAreaBodyNode, 'width', this.props.width + 'px');
     }
 });
-module.exports = ScrollableArea;
+module.exports = $ScrollableArea;

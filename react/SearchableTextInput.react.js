@@ -4,11 +4,11 @@
 var EventListener = require('./EventListener');
 var React = require('./React');
 var AbstractTextFieldMixin = require('./AbstractTextFieldMixin.react');
-var AbstractTextInput = require('./AbstractTextInput.react');
+var $AbstractTextInput = require('./AbstractTextInput.react');
 var getActiveElement = require('./getActiveElement');
 var merge = require('./merge');
 
-var SearchableTextInput = React.createClass({
+var $SearchableTextInput = React.createClass({
     displayName: "SearchableTextInput",
     propTypes: merge(AbstractTextFieldMixin.propTypes, {
         queryString: React.PropTypes.string,
@@ -90,7 +90,7 @@ var SearchableTextInput = React.createClass({
     },
     render: function() {
         var queryString = this.props.queryString || '';
-        return (React.createElement(AbstractTextInput, React.__spread({}, this.props, {
+        return (React.createElement($AbstractTextInput, React.__spread({}, this.props, {
             "aria-label": queryString,
             onChange: this._onChange,
             onFocus: this._onInputFocus,
@@ -100,4 +100,4 @@ var SearchableTextInput = React.createClass({
         })));
     }
 });
-module.exports = SearchableTextInput;
+module.exports = $SearchableTextInput;

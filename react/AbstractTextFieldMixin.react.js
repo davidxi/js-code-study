@@ -170,34 +170,34 @@ var AbstractTextFieldMixin = {
         var placeholderElem = null;
         var className;
         if (!this.getValue()) {
-/*
-._58ai {
-    color: #777;
-    padding-left: 2px;
-    pointer-events: none;
-    position: absolute
-}
-._58aj {
-    color: #aaa
-}
-*/
+            /*
+            ._58ai {
+                color: #777;
+                padding-left: 2px;
+                pointer-events: none;
+                position: absolute
+            }
+            ._58aj {
+                color: #aaa
+            }
+            */
             className = (("_58ai") + (this.state.focused ? ' ' + "_58aj" : ''));
             placeholderElem = React.createElement("span", {
                 className: className
             }, this.props.placeholder);
         }
-/*
-._58ak {
-    border: 1px solid #bdc7d8;
-    -webkit-box-sizing: border-box;
-    cursor: default;
-    display: inline-block;
-    font-weight: normal;
-    margin: 0;
-    position: relative;
-    vertical-align: middle
-}
-*/
+        /*
+        ._58ak {
+            border: 1px solid #bdc7d8;
+            -webkit-box-sizing: border-box;
+            cursor: default;
+            display: inline-block;
+            font-weight: normal;
+            margin: 0;
+            position: relative;
+            vertical-align: middle
+        }
+        */
         className = joinClasses(this.props.className, "_58ak");
         invariant(this.renderTextField);
         return (React.createElement("label", {

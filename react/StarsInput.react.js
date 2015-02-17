@@ -2,9 +2,9 @@
  * @providesModule StarsInput.react
  */
 var React = require('./React');
-var TooltipLink = require('./TooltipLink.react');
+var $TooltipLink = require('./TooltipLink.react');
 
-var StarsInput = React.createClass({
+var $StarsInput = React.createClass({
     displayName: "StarsInput",
     propTypes: {
         allowMultipleSubmissions: React.PropTypes.bool,
@@ -58,24 +58,24 @@ var StarsInput = React.createClass({
         var labelsLen = this.props.starLabels.length,
             starElms = [];
         for (var n = 0; n < labelsLen; n++) {
-            starElms.push(React.createElement(TooltipLink, {
-/*
-.mls {
-    margin-left: 5px
-}
-.mlm {
-    margin-left: 10px
-}
-.mll {
-    margin-left: 20px
-}
-._22mm {
-    cursor: pointer;
-    display: inline-block;
-    height: 13px;
-    width: 13px
-}
-*/
+            starElms.push(React.createElement($TooltipLink, {
+                /*
+                .mls {
+                    margin-left: 5px
+                }
+                .mlm {
+                    margin-left: 10px
+                }
+                .mll {
+                    margin-left: 20px
+                }
+                ._22mm {
+                    cursor: pointer;
+                    display: inline-block;
+                    height: 13px;
+                    width: 13px
+                }
+                */
                 className: (("mls") + (' ' + "_22mm") + (n >= this.state.starsShown ? ' ' + "_22mn" : '') + (n < this.state.starsShown ? ' ' + "_22mo" : '') + (!this.state.canUpdate ? ' ' + "_1g87" : '')),
                 // @todo: 'n >= starsShown' and 'n < starsShown' both ?
                 tooltip: this.props.starLabels[n],
@@ -92,4 +92,4 @@ var StarsInput = React.createClass({
         return (React.createElement("div", null, this.getStars()));
     }
 });
-module.exports = StarsInput;
+module.exports = $StarsInput;

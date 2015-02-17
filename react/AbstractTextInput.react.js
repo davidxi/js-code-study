@@ -4,22 +4,22 @@
 var AbstractTextFieldMixin = require('./AbstractTextFieldMixin.react');
 var React = require('./React');
 
-var AbstractTextInput = React.createClass({
+var $AbstractTextInput = React.createClass({
     displayName: "AbstractTextInput",
     mixins: [AbstractTextFieldMixin],
     renderTextField: function() {
         return this.setTextFieldPropsOn(React.createElement("input", {
             type: "text",
-/*
-._58al {
-    background: transparent;
-    border: 0;
-    margin: 0;
-    outline: 0;
-    padding: 0;
-    width: 100%
-}
-*/
+            /*
+            ._58al {
+                background: transparent;
+                border: 0;
+                margin: 0;
+                outline: 0;
+                padding: 0;
+                width: 100%
+            }
+            */
             className: "_58al",
             size: this.props.size,
             tabIndex: this.props.tabIndex,
@@ -29,4 +29,4 @@ var AbstractTextInput = React.createClass({
         }));
     }
 });
-module.exports = AbstractTextInput;
+module.exports = $AbstractTextInput;
